@@ -6,8 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
 import javax.swing.*;
@@ -40,32 +39,25 @@ public class modFy extends JFrame {
         btnLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String test=read();
-                String currentL=null;
-                while (test !=null)
+                File red= new File("../filediTesto.txt");
+                Scanner reader=null;
+                try
                 {
-                    currentL+=test+"/n";
-                    test=read();
+                    reader = new Scanner(red);
                 }
+                catch (FileNotFoundException exc)
+                {
+
+                }
+
+                String currentL=null;
+                while (reader.hasNext())
+                {
+                    currentL+=reader.nextLine()+"/n";
+                }
+                modBox.setText(currentL);
             }
         });
-
-    }
-    private String read()
-    {
-        File red= new File("../filediTesto.txt");
-        Scanner reader=null;
-        try
-        {
-            reader = new Scanner(red);
-        }
-        catch (FileNotFoundException exc)
-        {
-
-        }
-
-        return reader.nextLine();
-
 
     }
 
