@@ -12,63 +12,80 @@ import java.util.Scanner;
 import javax.swing.*;
 
 public class modFy extends JFrame {
-    modFy(){
-        setUp();
-    }
-    private void setUp()
-    {
+    modFy(){
+        setUp();
+    }
+    private void setUp()
+    {
 
-        this.setTitle("Test");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(300,300);
+        this.setTitle("Test");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(300,300);
 
-        final JTextField modBox = new JTextField(10);
+        final JTextField modBox = new JTextField(10);
 
-        JButton btnLoad=new JButton("Load");
-        JButton btnSave=new JButton("Save");
+        JButton btnLoad=new JButton("Load");
+        JButton btnSave=new JButton("Save");
 
-        JPanel box =new JPanel();
-        box.setSize(300,300);
+        JPanel box =new JPanel();
+        box.setSize(300,300);
 
-        box.add(modBox);
-        box.add(btnLoad);
-        box.add(btnSave);
+        box.add(modBox);
+        box.add(btnLoad);
+        box.add(btnSave);
 
-        this.setContentPane(box);
+        this.setContentPane(box);
 
-        btnLoad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                File red= new File("../filediTesto.txt");
-                Scanner reader=null;
-                try
-                {
-                    reader = new Scanner(red);
-                }
-                catch (FileNotFoundException exc)
-                {
+        btnLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                File red= new File("./filediTesto.txt");
+                Scanner reader=null;
+                try
+                {
+                    reader = new Scanner(red);
+                }
+                catch (FileNotFoundException exc)
+                {
 
-                }
+                }
 
-                String currentL=null;
-                while (reader.hasNext())
-                {
-                    currentL+=reader.nextLine()+"/n";
-                }
-                modBox.setText(currentL);
-            }
-        });
+                String currentL="";
+                while (reader.hasNext())
+                {
+                    currentL+=reader.nextLine()+" ";
+                }
+                modBox.setText(currentL);
+                reader.close();
+            }
+        });
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                PrintStream print=null;
+                try
+                {
+                    print=new PrintStream("./filediTesto.txt");
+                }
+                catch (FileNotFoundException exc2)
+                {
 
-    }
+                }
+                print.println(modBox.getText());
+                print.flush();
+            }
+        });
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable()        {
-            @Override
-            public void run(){
-                modFy ex = new modFy();
-                ex.setVisible(true);
-            }
-        });
-    }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable()	{
+            @Override
+            public void run(){
+                modFy ex = new modFy();
+                ex.setVisible(true);
+            }
+        });
+    }
 
 }
